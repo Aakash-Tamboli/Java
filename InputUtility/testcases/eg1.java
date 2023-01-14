@@ -4,13 +4,10 @@ class psp
 public static void main(String []args)
 {
 Keyboard k=new Keyboard();
-string name;
+String name;
 char gender;
 int age;
-System.out.print("Name: ");
-name=k.getString(); // We need to implement this
-
-
-
+name=k.getString("What is Your Name: "); // We need to implement this
+System.out.println("I found your name is: "+name);
 }
 }
