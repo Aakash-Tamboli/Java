@@ -61,14 +61,30 @@ return this.k.nextByte();
 
 public char getChar()
 {
+this.clearingBufferNeeded=true;
 return this.k.next().charAt(0);
 }
 
 public char getChar(String message)
 {
 System.out.print(message);
+this.clearingBufferNeeded=true;
 return this.k.next().charAt(0);
 }
+
+public float getFloat()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextFloat();
+}
+
+public float getFloat(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextFloat();
+}
+
 
 public String getString()
 {
