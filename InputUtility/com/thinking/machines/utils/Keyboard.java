@@ -21,7 +21,6 @@ this.clearingBufferNeeded=true;
 return this.k.nextLong();
 }
 
-
 public int getInt()
 {
 this.clearingBufferNeeded=true;
@@ -34,6 +33,42 @@ this.clearingBufferNeeded=true;
 return this.k.nextInt();
 }
 
+public short getShort()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextShort();
+}
+
+public short getShort(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextShort();
+}
+
+public byte getByte()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextByte();
+}
+
+public byte getByte(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextByte();
+}
+
+public char getChar()
+{
+return this.k.next().charAt(0);
+}
+
+public char getChar(String message)
+{
+System.out.print(message);
+return this.k.next().charAt(0);
+}
 
 public String getString()
 {
