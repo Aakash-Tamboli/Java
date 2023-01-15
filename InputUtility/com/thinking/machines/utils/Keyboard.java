@@ -9,6 +9,32 @@ public Keyboard()
 this.k=new Scanner(System.in);
 this.clearingBufferNeeded=false;
 }
+public long getLong()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextLong();
+}
+public long getLong(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextLong();
+}
+
+
+public int getInt()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextInt();
+}
+public int getInt(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextInt();
+}
+
+
 public String getString()
 {
 if(this.clearingBufferNeeded==true)
@@ -28,17 +54,7 @@ this.clearingBufferNeeded=false;
 }
 return this.k.nextLine();
 }
-public int getInt()
-{
-this.clearingBufferNeeded=true;
-return this.k.nextInt();
-}
-public int getInt(String message)
-{
-System.out.print(message);
-this.clearingBufferNeeded=true;
-return this.k.nextInt();
-}
+
 public double getDouble()
 {
 this.clearingBufferNeeded=true;
