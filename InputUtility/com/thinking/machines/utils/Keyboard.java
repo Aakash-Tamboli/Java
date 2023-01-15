@@ -85,6 +85,31 @@ this.clearingBufferNeeded=true;
 return this.k.nextFloat();
 }
 
+public double getDouble()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextDouble();
+}
+
+public double getDouble(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextDouble();
+}
+
+public boolean getBoolean()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextBoolean();
+}
+
+public boolean getBoolean(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextBoolean();
+}
 
 public String getString()
 {
@@ -104,17 +129,5 @@ this.k.nextLine();
 this.clearingBufferNeeded=false;
 }
 return this.k.nextLine();
-}
-
-public double getDouble()
-{
-this.clearingBufferNeeded=true;
-return this.k.nextDouble();
-}
-public double getDouble(String message)
-{
-System.out.print(message);
-this.clearingBufferNeeded=true;
-return this.k.nextDouble();
 }
 } // class closing parenthesis
