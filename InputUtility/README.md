@@ -28,10 +28,13 @@ System.out.printf("Name: %s\nrollNumber: %d\n",name,rollNumber);
 
 ```
 ### Explaination
+
 So If you compile above code and run you will see application ask for roll Number Let's say we give 25 and press Enter, then you see application not ask for name it will directly print the name and rollNumber but interstingly name is blank.
 
 #### Internal Explaination
+
 So internally we have buffer and when we give 25 and press Enter, Conceptually inside buffer we have 2, 5 and Enter key in buffer. and Technically buffer contains the unicode of respective signs.
+
 ------------------------------------------------------------------------------------------------------------------
 					2 5 (Enter Key)
 ------------------------------------------------------------------------------------------------------------------
@@ -39,11 +42,12 @@ So internally we have buffer and when we give 25 and press Enter, Conceptually i
 ##### Behaviour of methods
 So `sc.nextInt()` Method have behaviour when it see numeric value(conceptually) it will start to collecting and it collect util it see Enter Key. Once it see Enter Key it imediatly stopped and parse, then return the int type value.
 
-Now Let's understand behaviour of `sc.nextLine()` Method. Whatever it see it will collect util it see Enter Key. But `nextLine` method also collect Enter key and parse then return String.
+Now Let's understand behaviour of `sc.nextLine()` Method. Whatever it see it will collect util it see Enter Key. But `nextLine` method also collect Enter key and parse then return as String.
 
 Now Let's Dry Run or Paper Run of our code
+So first it ask for roll number the we give 25 and press enter key. So iternally nextInt() Method only collect 	2 and 5 and apply paring logic and return 25 as `int value`. 
 
-So first it ask for roll number the we give 25 and press enter key. So iternally nextInt() Method only collect 2 and 5 and apply paring logic and return 25 as `int value`. 
+
 Now insde buffer we have
 ------------------------------------------------------------------------------------------------------------------
 				          (Enter Key)
@@ -51,7 +55,7 @@ Now insde buffer we have
 But When control goes to the line `name=sc.nextLine()`, Now We Know nextLine Method will imediatly start collecting and it stopped when it see Enter Key and also collect Enter Key, So it will collected and apply parsing logic and return as string. that's why program not ask for name.
 
 ## Solution
-we can give free fire of `sc.nextLine()' method so that it will grab the Enter key and then Our buffer is Empty so it will ask further internally functionality to take input from I/O device that is our keyboard. Now our application ask for name
+we can give free fire of `sc.nextLine()` method so that it will grab the Enter key and then Our buffer is Empty so it will ask further internally functionality to take input from I/O device that is our keyboard. Now our application ask for name
 Code:
 ```java
 
