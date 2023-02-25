@@ -1,32 +1,133 @@
 package com.thinking.machines.utils;
-import java.io.*;
+import java.util.Scanner;
 public class Keyboard
 {
-private BufferedReader bufferReader;
-
+private Scanner k;
+private boolean clearingBufferNeeded;
 public Keyboard()
 {
-this.bufferReader=new BufferedReader(new InputStreamReader(System.in));
+this.k=new Scanner(System.in);
+this.clearingBufferNeeded=false;
+}
+public long getLong()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextLong();
+}
+public long getLong(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextLong();
+}
+
+public int getInt()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextInt();
+}
+public int getInt(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextInt();
+}
+
+public short getShort()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextShort();
+}
+
+public short getShort(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextShort();
+}
+
+public byte getByte()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextByte();
+}
+
+public byte getByte(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextByte();
+}
+
+public char getChar()
+{
+this.clearingBufferNeeded=true;
+return this.k.next().charAt(0);
+}
+
+public char getChar(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.next().charAt(0);
+}
+
+public float getFloat()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextFloat();
+}
+
+public float getFloat(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextFloat();
+}
+
+public double getDouble()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextDouble();
+}
+
+public double getDouble(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextDouble();
+}
+
+public boolean getBoolean()
+{
+this.clearingBufferNeeded=true;
+return this.k.nextBoolean();
+}
+
+public boolean getBoolean(String message)
+{
+System.out.print(message);
+this.clearingBufferNeeded=true;
+return this.k.nextBoolean();
 }
 
 public String getString()
 {
-String str="";
-try
+if(this.clearingBufferNeeded==true)
 {
-while(this.bufferReader.ready()) this.bufferReader.read();
-str=this.bufferReader.readLine();
-}catch(IOException ioException)
-{
-str="";
+this.k.nextLine();
+this.clearingBufferNeeded=false;
 }
-return str;
+return this.k.nextLine();
 }
-
 public String getString(String message)
 {
 System.out.print(message);
-return this.getString();
+if(this.clearingBufferNeeded==true)
+{
+this.k.nextLine();
+this.clearingBufferNeeded=false;
 }
-
+return this.k.nextLine();
+}
 } // class closing parenthesis
