@@ -1,1 +1,1 @@
-javac -d ../classes ./com/thinking/machines/utils/*.java
+javac -d ../classes ./com/thinking/machines/util/*.java
