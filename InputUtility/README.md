@@ -7,76 +7,92 @@ here you get to know about `InputUtility` of My Java mini-projects.
 we have `fflush in C`, but when we talk about `Java` so there is no such facilites to clear buffer in a simple way. In this project I created a package for resolving this issue.
 
 ## Real life use
-So, This package is very usefull whenever I or someone wants to create application on text interface.
+So, This package is very usefull whenever I or someone wants to create application on text user interface.
 
 
 ## Issue
 Consider the following code
 ```java
 
-import java.util.Scanner;
-class Main
+import java.io.*;
+class psp
 {
-public static void main(String []args)
+public static void main(String args[])
 {
-int rollNumber;
-String name;
-Scanner sc=new Scanner(System.in);
-System.out.print("Enter rollNumber: ");
-rollNumber=sc.nextInt();
-System.out.print("Enter name: ");
-name=sc.nextLine();
-System.out.printf("Name: %s\nrollNumber: %d\n",name,rollNumber);
+String name="";
+char gender='a';
+InputStreamReader isr=new InputStreamReader(System.in);
+BufferedReader br=new BufferedReader(isr);
+try
+{
+System.out.print("Enter Student Gender: ");
+gender=(char)br.read();
+System.out.print("Enter Student Name: ");
+name=br.readLine();
+}catch(IOException e)
+{
+System.out.println(e.getMessage());
+}
+System.out.println(name);
+System.out.println(gender);
 }
 }
+
 
 ```
 ### Explaination
 
-So If you compile above code and run you will see application ask for roll Number Let's say we give 25 and press Enter, then you see application not ask for name it will directly print the name and rollNumber but interstingly name is blank.
+So If you compile above code and run you will see application ask for Gender Let's say we give Y and press Enter, then you see application not ask for name it will directly print the name and gender where interstingly name is blank.
 
 #### Internal Explaination
 
-So internally we have buffer and when we give 25 and press Enter, Conceptually inside buffer we have 2, 5 and Enter key in buffer. and Technically buffer contains the unicode of respective signs.
+So internally we have buffer and when we give Y and press Enter, Conceptually inside buffer we have Y and Enter key in buffer. and Technically buffer contains the unicode of respective signs.
 
 ------------------------------------------------------------------------------------------------------------------
-					2 5 (Enter Key)
+					Y (Enter Key)
 ------------------------------------------------------------------------------------------------------------------
 
 ##### Behaviour of methods
-So `sc.nextInt()` Method have behaviour when it see numeric value(conceptually) it will start to collecting and it collect util it see Enter Key. Once it see Enter Key it imediatly stopped and parse, then return the int type value.
+So `br.read()` Method have behaviour that it only take 1 unicode from the buffer 
 
-Now Let's understand behaviour of `sc.nextLine()` Method. Whatever it see it will collect util it see Enter Key. But `nextLine` method also collect Enter key and parse then return as String.
+Now Let's understand behaviour of `br.readLine` Method. Whatever it see it will collect util it see Enter Key. But `readLine` method also collect Enter key and parse then return as String.
 
 Now Let's Dry Run or Paper Run of our code
-So first it ask for roll number the we give 25 and press enter key. So iternally nextInt() Method only collect 	2 and 5 and apply paring logic and return 25 as `int value`. 
-
+So first it ask for gender the we give Y and press enter key. So iternally read() Method only collect Y(unicode) and return its repective unicode 
 
 Now insde buffer we have
 ------------------------------------------------------------------------------------------------------------------
 				          (Enter Key)
 ------------------------------------------------------------------------------------------------------------------
-But When control goes to the line `name=sc.nextLine()`, Now We Know nextLine Method will imediatly start collecting and it stopped when it see Enter Key and also collect Enter Key, So it will collected and apply parsing logic and return as string. that's why program not ask for name.
+But When control goes to the line `name=br.readLine()`, Now We Know readLine Method will imediatly start collecting and it stopped when it see Enter Key and also collect Enter Key, So it will collected and apply parsing logic and return as string. that's why program not ask for name.
 
 ## Solution
-we can give free fire of `sc.nextLine()` method so that it will grab the Enter key and then Our buffer is Empty so it will ask further internally functionality to take input from I/O device that is our keyboard. Now our application ask for name
+we can give free fire of `br.reader()` method so that it will grab the Enter key and then Our buffer is Empty so it will ask further internally functionality to take input from I/O devices that is our keyboard. Now our application ask for name
 Code:
 ```java
 
-import java.util.Scanner;
-class Main
+import java.io.*;
+class psp
 {
-public static void main(String []args)
+public static void main(String args[])
 {
-int rollNumber;
-String name;
-Scanner sc=new Scanner(System.in);
-System.out.print("Enter rollNumber: ");
-rollNumber=sc.nextInt();
-sc.nextLine(); // this is solution of our problem.
-System.out.print("Enter name: ");
-name=sc.nextLine();
-System.out.printf("Name: %s\nrollNumber: %d\n",name,rollNumber);
+String name="";
+char gender='a';
+InputStreamReader isr=new InputStreamReader(System.in);
+BufferedReader br=new BufferedReader(isr);
+try
+{
+System.out.print("Enter Student Gender: ");
+gender=(char)br.read();
+br.read(); // free fire
+System.out.print("Enter Student Name: ");
+name=br.readLine();
+}catch(IOException e)
+{
+System.out.println(e.getMessage());
+}
+System.out.println(name);
+System.out.println(gender);
 }
 }
 
