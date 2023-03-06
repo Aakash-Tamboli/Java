@@ -90,6 +90,7 @@ randomAccessFile.writeBytes("\n");
 randomAccessFile.writeBytes(course);
 randomAccessFile.writeBytes("\n");
 randomAccessFile.writeBytes(String.valueOf(fee));
+randomAccessFile.writeBytes("\n");
 randomAccessFile.close();
 System.out.print(name+" is added to our database");
 }catch(IOException ioException)
@@ -110,7 +111,45 @@ private static void remove(String []data)
 
 private static void getAll(String []data)
 {
-
+try
+{
+File file=new File(DATA_FILE);
+if(file.exists()==false)
+{
+System.out.println("No Student");
+return;
+}
+RandomAccessFile randomAccessFile;
+randomAccessFile=new RandomAccessFile(file,"rw");
+if(randomAccessFile.length()==0)
+{
+// it means file is empty may be because of data is delete from the file.
+randomAccessFile.close();
+System.out.println("No Student");
+return;
+}
+String name;
+String mobileNumber;
+String course;
+int fee;
+int totalStudent=0;
+int totalFee=0;
+while(randomAccessFile.getFilePointer()<randomAccessFile.length())
+{
+mobileNumber=randomAccessFile.readLine();
+name=randomAccessFile.readLine();
+course=randomAccessFile.readLine();
+fee=Integer.parseInt(randomAccessFile.readLine());
+System.out.printf("%s, %s, %s, %d\n",mobileNumber,name,course,fee);
+totalStudent++;
+totalFee+=fee;
+}// while bracess ends
+System.out.println("Total Registration: "+totalStudent);
+System.out.println("Total fee collected: "+totalFee);
+}catch(IOException ioException)
+{
+System.out.println("Something Wrong");
+}
 }
 private static void getByCourse(String []data)
 {
