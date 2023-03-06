@@ -1,5 +1,5 @@
 import com.thinking.machines.util.*;
-class KeyboardTestcase
+class Main
 {
 public static void main(String args[])
 {
