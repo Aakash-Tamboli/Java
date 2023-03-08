@@ -2,7 +2,7 @@ import java.io.*;
 class CoachingStudentManager
 {
 private static final String DATA_FILE="StudentData.dat";
-private static final String operations[]={"add","update","getAll","getByContactNumber","getByCourse"};
+private static final String operations[]={"add","update","getAll","getByContactNumber","getByCourse","remove"};
 private static final String courses[]={"c","c++","java","python","node.js"};
 // helper functions starts
 private static boolean isOperationValid(String operation)
@@ -101,12 +101,199 @@ System.out.println("Something Wrong");
 
 private static void update(String []data)
 {
-
+if(data.length!=5)
+{
+System.out.println("Wrong number of elements passed for updation");
+System.out.println("Usage : java CoachingStudentManager update mobile_number name course fee");
+return;
+}
+String mobileNumber=data[1];
+String name=data[2];
+String course=data[3];
+if(!isCourseValid(course))
+{
+System.out.println("Invalid course : "+course);
+displayValidCourse();
+return;
+}
+int fee;
+try
+{
+fee=Integer.parseInt(data[4]);
+}catch(NumberFormatException numberFormatException)
+{
+System.out.println("Fee should be integer");
+return;
+}
+try
+{
+File file=new File(DATA_FILE);
+if(file.exists()==false)
+{
+System.out.println("Invalid contact number: "+mobileNumber);
+return;
+}
+RandomAccessFile randomAccessFile;
+randomAccessFile=new RandomAccessFile(file,"rw");
+if(randomAccessFile.length()==0)
+{
+randomAccessFile.close();
+System.out.println("Invalid contact number: "+mobileNumber);
+return;
+}
+boolean found=false;
+String vMobileNumber="";
+String vName="";
+String vCourse="";
+int vFee=0;
+while(randomAccessFile.getFilePointer()<randomAccessFile.length())
+{
+vMobileNumber=randomAccessFile.readLine();
+vName=randomAccessFile.readLine();
+vCourse=randomAccessFile.readLine();
+vFee=Integer.parseInt(randomAccessFile.readLine());
+if(vMobileNumber.equalsIgnoreCase(mobileNumber))
+{
+found=true;
+break;
+}
+}
+if(found==false)
+{
+System.out.println("Invalid contact number :"+mobileNumber);
+randomAccessFile.close();
+return;
+}
+System.out.println("Updating data of : "+mobileNumber);
+System.out.println("Name of Candidate is : "+vName);
+File tmpFile=new File("tmp.tmp");
+RandomAccessFile tmpRandomAccessFile;
+tmpRandomAccessFile=new RandomAccessFile(tmpFile,"rw");
+tmpRandomAccessFile.setLength(0);
+randomAccessFile.seek(0);
+while(randomAccessFile.getFilePointer()<randomAccessFile.length())
+{
+vMobileNumber=randomAccessFile.readLine();
+vName=randomAccessFile.readLine();
+vCourse=randomAccessFile.readLine();
+vFee=Integer.parseInt(randomAccessFile.readLine());
+if(vMobileNumber.equalsIgnoreCase(mobileNumber)==false)
+{
+tmpRandomAccessFile.writeBytes(vMobileNumber+"\n");
+tmpRandomAccessFile.writeBytes(vName+"\n");
+tmpRandomAccessFile.writeBytes(vCourse+"\n");
+tmpRandomAccessFile.writeBytes(vFee+"\n");
+}
+else
+{
+tmpRandomAccessFile.writeBytes(mobileNumber+"\n");
+tmpRandomAccessFile.writeBytes(name+"\n");
+tmpRandomAccessFile.writeBytes(course+"\n");
+tmpRandomAccessFile.writeBytes(fee+"\n");
+}
+}
+randomAccessFile.seek(0);
+tmpRandomAccessFile.seek(0);
+while(tmpRandomAccessFile.getFilePointer()<tmpRandomAccessFile.length())
+{
+randomAccessFile.writeBytes(tmpRandomAccessFile.readLine()+"\n");
+}
+randomAccessFile.setLength(tmpRandomAccessFile.length());
+tmpRandomAccessFile.setLength(0);
+randomAccessFile.close();
+tmpRandomAccessFile.close();
+System.out.println("Data Updated");
+}catch(IOException ioException)
+{
+System.out.println("OOPS some internal problem");
+}
 }
 
 private static void remove(String []data)
 {
-
+if(data.length!=2)
+{
+System.out.println("Wrong number of elements passed for removal");
+System.out.println("Usage : java CoachingStudentManager remove mobile_number");
+return;
+}
+String mobileNumber=data[1];
+int fee;
+try
+{
+File file=new File(DATA_FILE);
+if(file.exists()==false)
+{
+System.out.println("Invalid contact number: "+mobileNumber);
+return;
+}
+RandomAccessFile randomAccessFile;
+randomAccessFile=new RandomAccessFile(file,"rw");
+if(randomAccessFile.length()==0)
+{
+randomAccessFile.close();
+System.out.println("Invalid contact number: "+mobileNumber);
+return;
+}
+boolean found=false;
+String vMobileNumber="";
+String vName="";
+String vCourse="";
+int vFee=0;
+while(randomAccessFile.getFilePointer()<randomAccessFile.length())
+{
+vMobileNumber=randomAccessFile.readLine();
+vName=randomAccessFile.readLine();
+vCourse=randomAccessFile.readLine();
+vFee=Integer.parseInt(randomAccessFile.readLine());
+if(vMobileNumber.equalsIgnoreCase(mobileNumber))
+{
+found=true;
+break;
+}
+}
+if(found==false)
+{
+System.out.println("Invalid contact number :"+mobileNumber);
+randomAccessFile.close();
+return;
+}
+System.out.println("Deleting data of : "+mobileNumber);
+System.out.println("Name of Candidate is : "+vName);
+File tmpFile=new File("tmp.tmp");
+RandomAccessFile tmpRandomAccessFile;
+tmpRandomAccessFile=new RandomAccessFile(tmpFile,"rw");
+tmpRandomAccessFile.setLength(0);
+randomAccessFile.seek(0);
+while(randomAccessFile.getFilePointer()<randomAccessFile.length())
+{
+vMobileNumber=randomAccessFile.readLine();
+vName=randomAccessFile.readLine();
+vCourse=randomAccessFile.readLine();
+vFee=Integer.parseInt(randomAccessFile.readLine());
+if(vMobileNumber.equalsIgnoreCase(mobileNumber)==false)
+{
+tmpRandomAccessFile.writeBytes(vMobileNumber+"\n");
+tmpRandomAccessFile.writeBytes(vName+"\n");
+tmpRandomAccessFile.writeBytes(vCourse+"\n");
+tmpRandomAccessFile.writeBytes(vFee+"\n");
+}
+}
+randomAccessFile.seek(0);
+tmpRandomAccessFile.seek(0);
+while(tmpRandomAccessFile.getFilePointer()<tmpRandomAccessFile.length())
+{
+randomAccessFile.writeBytes(tmpRandomAccessFile.readLine()+"\n");
+}
+randomAccessFile.setLength(tmpRandomAccessFile.length());
+tmpRandomAccessFile.setLength(0);
+randomAccessFile.close();
+tmpRandomAccessFile.close();
+System.out.println("Data Deleted");
+}catch(IOException ioException)
+{
+System.out.println("OOPS some internal problem");
+}
 }
 
 private static void getAll(String []data)
