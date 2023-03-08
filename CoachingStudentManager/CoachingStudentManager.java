@@ -151,13 +151,136 @@ System.out.println("Total fee collected: "+totalFee);
 System.out.println("Something Wrong");
 }
 }
+
 private static void getByCourse(String []data)
 {
-
+if(data.length!=2)
+{
+System.out.println("Invalid");
+System.out.println("Usage: java CoachingStudentManager getByCourse and courses are: ");
+displayValidCourse();
+return;
+}
+String course=data[1];
+if(isCourseValid(course)==false)
+{
+System.out.println("Invalid course: "+course);
+return;
+}
+try
+{
+File file=new File(DATA_FILE);
+if(file.exists()==false)
+{
+System.out.println("No registration against this course: "+course);
+return;
+}
+RandomAccessFile randomAccessFile;
+randomAccessFile=new RandomAccessFile(file,"rw");
+if(randomAccessFile.length()==0)
+{
+System.out.println("No registration against: "+course);
+randomAccessFile.close();
+return;
+}
+String vMobileNumber="";
+String vName="";
+String vCourse="";
+int totalStudentCount=0;
+int totalFeeCount=0;
+int vFee=0;
+boolean found=false;
+while(randomAccessFile.getFilePointer()<randomAccessFile.length())
+{
+vMobileNumber=randomAccessFile.readLine();
+vName=randomAccessFile.readLine();
+vCourse=randomAccessFile.readLine();
+vFee=Integer.parseInt(randomAccessFile.readLine());
+if(course.equalsIgnoreCase(vCourse))
+{
+System.out.println("Contact Number: "+vMobileNumber);
+System.out.println("Name: "+vName);
+System.out.println("Course: "+vCourse);
+System.out.println("Fee: "+vFee);
+totalStudentCount++;
+totalFeeCount+=vFee;
+found=true;
+}
+}
+randomAccessFile.close();
+if(found==false)
+{
+System.out.println("No registration against this course"+course);
+return;
+}
+else
+{
+System.out.println("Total student registerd : "+totalStudentCount);
+System.out.println("Total fee collected : "+totalFeeCount);
+}
+}catch(IOException ioException)
+{
+System.out.println("OOPS!! Some Internal Problem try again later");
+}
 }
 private static void getByContactNumber(String []data)
 {
-
+if(data.length!=2)
+{
+System.out.println("Invalid Mobile number");
+System.out.println("Usage: java CoachingStudentManager getByContactNumber [contactNumber]");
+return;
+}
+String mobileNumber=data[1];
+try
+{
+File file=new File(DATA_FILE);
+if(file.exists()==false)
+{
+System.out.println("Invalid contact number "+mobileNumber);
+return;
+}
+RandomAccessFile randomAccessFile;
+randomAccessFile=new RandomAccessFile(file,"rw");
+if(randomAccessFile.length()==0)
+{
+System.out.println("Invalid contact number "+mobileNumber);
+randomAccessFile.close();
+return;
+}
+String vMobileNumber="";
+String vName="";
+String vCourse="";
+int vFee=0;
+boolean found=false;
+while(randomAccessFile.getFilePointer()<randomAccessFile.length())
+{
+vMobileNumber=randomAccessFile.readLine();
+if(vMobileNumber.equalsIgnoreCase(mobileNumber)==true)
+{
+vName=randomAccessFile.readLine();
+vCourse=randomAccessFile.readLine();
+vFee=Integer.parseInt(randomAccessFile.readLine());
+found=true;
+break;
+}
+randomAccessFile.readLine();
+randomAccessFile.readLine();
+randomAccessFile.readLine();
+}
+randomAccessFile.close();
+if(found==false)
+{
+System.out.println("Invalid mobile Number: "+mobileNumber);
+return;
+}
+System.out.println("Name: "+vName);
+System.out.println("Course: "+vCourse);
+System.out.println("Fee: "+vFee);
+}catch(IOException ioException)
+{
+System.out.println("OOPS!! Some Internal Problem try again later");
+}
 }
 
 
