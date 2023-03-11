@@ -31,7 +31,7 @@ return this.size;
 }
 public T get(int i)
 {
-if(i>=this.size) return null;
+if(i>=this.size) throw new IndexOutOfBoundsException("invalid index: "+i);
 else return (T)this.collection[i];
 }
 public int getCapacity()
