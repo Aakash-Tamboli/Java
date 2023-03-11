@@ -26,7 +26,6 @@ this.collection[this.size]=data;
 this.size++;
 }
 
-
 public void add(T data,int index)
 {
 if(index<0 || index > this.size) throw new IndexOutOfBoundsException("invalid index");
@@ -47,6 +46,18 @@ this.collection[i]=this.collection[i-1];
 }
 this.collection[index]=data;
 this.size++;
+}
+
+public T removeAt(int index)
+{
+if(index<0 || index>=this.size) throw new IndexOutOfBoundsException("Invalid index: "+index);
+for(int i=index;i<this.size;i++)
+{
+this.collection[i]=this.collection[i+1];
+}
+T data=(T)this.collection[index];
+this.size--;
+return data;
 }
 
 public int size()
@@ -82,15 +93,17 @@ for(int i=0;i<7;i++) list.add(i);
 list.add(790,5);
 for(int i=0;i<list.size();i++) System.out.print(list.get(i)+" ");
 System.out.println("Testing complete");
-*/
 for(int i=0;i<7;i++) list.add(i);
 System.out.println("currently capacity: "+list.getCapacity());
 list.empty();
 System.out.println("after empty method capacity is: "+list.getCapacity());
 System.out.println("after empty method size is: "+list.size());
 System.out.println("Trying to get data after clearing");
-list.get(0);
 System.out.println("Testing complete");
-
+*/
+for(int i=0;i<7;i++) list.add(i+1);
+System.out.println("removed: "+list.removeAt(3));
+for(int i=0;i<list.size();i++) System.out.print(list.get(i)+" ");
+System.out.println("Testing complete");
 }
 }
