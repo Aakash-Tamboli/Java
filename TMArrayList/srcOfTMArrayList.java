@@ -73,7 +73,7 @@ public int getCapacity()
 {
 return this.capacity;
 }
-public void empty()
+public void clear()
 {
 // logically it is empty technically We still have buffer
 this.size=0;
@@ -83,8 +83,8 @@ class psp
 {
 public static void main(String []args)
 {
-TMArrayList<Integer> list=new TMArrayList<Integer>();
 /*
+TMArrayList<Integer> list=new TMArrayList<Integer>();
 testcase for another case
 for(int i=0;i<list.size();i++) System.out.print(list.get(i)+" ");
 System.out.println("currently capacity: "+list.getCapacity());
@@ -95,15 +95,21 @@ for(int i=0;i<list.size();i++) System.out.print(list.get(i)+" ");
 System.out.println("Testing complete");
 for(int i=0;i<7;i++) list.add(i);
 System.out.println("currently capacity: "+list.getCapacity());
-list.empty();
-System.out.println("after empty method capacity is: "+list.getCapacity());
-System.out.println("after empty method size is: "+list.size());
+list.clear();
+System.out.println("after clear method capacity is: "+list.getCapacity());
+System.out.println("after clear method size is: "+list.size());
 System.out.println("Trying to get data after clearing");
 System.out.println("Testing complete");
-*/
 for(int i=0;i<7;i++) list.add(i+1);
 System.out.println("removed: "+list.removeAt(3));
 for(int i=0;i<list.size();i++) System.out.print(list.get(i)+" ");
 System.out.println("Testing complete");
+*/
+TMArrayList<String> list=new TMArrayList<String>();
+list.add(new String("Aakash"));
+list.add("Bittu");
+list.add("AAKASH");
+for(int i=0;i<list.size();i++) System.out.print(list.get(i)+" ");
+
 }
 }
