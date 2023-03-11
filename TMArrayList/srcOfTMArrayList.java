@@ -47,5 +47,7 @@ TMArrayList<Integer> list=new TMArrayList<Integer>();
 for(int i=0;i<500;i++) list.add(i);
 for(int i=0;i<list.size();i++) System.out.print(list.get(i)+" ");
 System.out.println("currently capacity: "+list.getCapacity());
+list.get(60000);
+System.out.println("Testing complete");
 }
 }
